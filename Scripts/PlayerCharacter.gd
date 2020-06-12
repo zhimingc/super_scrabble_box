@@ -5,6 +5,8 @@ export var jumpForce = 100.0
 export var mass = 10.0
 export var drag = Vector2(0.875,0.925)
 
+signal hit
+
 var acceleration = Vector2()
 var velocity = Vector2()
 var grav_suppress = 0.0
@@ -33,6 +35,12 @@ func _physics_process(delta):
 	velocity += acceleration * 100;
 	var collision_info = move_and_slide(velocity * delta, Vector2.UP)
 	
+	# collision detection
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		var groups = collision.collider.get_groups()
+		if collision and groups.has("enemy"):
+			die()
 
 func update_jump_forces(delta):
 	if is_on_ceiling():
@@ -43,4 +51,7 @@ func update_internal_forces(delta):
 	
 func jump():
 	acceleration.y -= jumpForce
+	
+func die():
+	queue_free()
 

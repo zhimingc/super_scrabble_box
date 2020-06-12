@@ -14,14 +14,16 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 
 [node name="PlayerCharacter" type="KinematicBody2D"]
+position = Vector2( 193.092, 422.928 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-runSpeed = 20.0
-jumpForce = 1000.0
-mass = 4.0
+runSpeed = 25.0
+jumpForce = 675.0
+mass = 3.75
+drag = Vector2( 0.875, 0.95 )
 
 [node name="PC_Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
