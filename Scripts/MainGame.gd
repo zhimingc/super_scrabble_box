@@ -13,6 +13,9 @@ func _unhandled_key_input(event):
 				debug_spawn_player()
 			if event.scancode == KEY_E:
 				spawn_enemy()
+			if event.scancode == KEY_Q:
+				if $PlayerCharacter.can_take_letter():
+					$PlayerCharacter.add_letter("A")
 
 func debug_spawn_player():
 	var newPlayer = Player.instance()

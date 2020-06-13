@@ -10,10 +10,22 @@ signal hit
 var acceleration = Vector2()
 var velocity = Vector2()
 var grav_suppress = 0.0
+var letterHud = []
+var letterSlot = []
+
+class LetterSlot:
+	var inUse : bool
+	var letter: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	velocity = Vector2.ZERO
+	for x in get_children():
+		if x.name.find("TextureRect") != -1:
+			letterHud.push_back(x)
+			var newSlot = LetterSlot.new()
+			newSlot.inUse = false
+			letterSlot.push_back(newSlot)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -55,3 +67,18 @@ func jump():
 func die():
 	queue_free()
 
+func can_take_letter():
+	return get_valid_slot() != -1
+
+func add_letter(letter):
+	var idx = get_valid_slot()
+	letterSlot[idx].inUse = true
+	letterSlot[idx].letter = letter
+	letterHud[idx].visible = true
+	letterHud[idx].get_node("Label").text = letter
+
+func get_valid_slot():
+	for i in letterSlot.size():
+		if letterSlot[i].inUse == false:
+			return i
+	return -1
