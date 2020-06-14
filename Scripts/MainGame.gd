@@ -2,9 +2,15 @@ extends Node2D
 
 export (PackedScene) var Player
 export (PackedScene) var Enemy_Basic
+export (PackedScene) var LetterBox
+
+var letterSpawns = []
+var oldLetterSpawn = -1
 
 func _ready():
 	$EnemyTimer.connect("timeout", self, "spawn_enemy")
+	letterSpawns = $LetterSpawns.get_children()
+	spawn_letterBox()
 
 func _unhandled_key_input(event):
 	if !event.echo:
@@ -16,6 +22,8 @@ func _unhandled_key_input(event):
 			if event.scancode == KEY_Q:
 				if $PlayerCharacter.can_take_letter():
 					$PlayerCharacter.add_letter("A")
+			if event.scancode == KEY_R:
+				spawn_letterBox()
 
 func debug_spawn_player():
 	var newPlayer = Player.instance()
@@ -30,3 +38,15 @@ func spawn_enemy():
 	
 func respawn_enemy(obj):
 	obj.position = $Spawner.position
+	
+func spawn_letterBox():
+	var spawnIdx = 0
+	while true:
+		spawnIdx = randi() % letterSpawns.size()
+		if spawnIdx != oldLetterSpawn:
+			break
+	var newBox = LetterBox.instance()
+	newBox.position = letterSpawns[spawnIdx].position
+	newBox.connect("collected", self, "spawn_letterBox")
+	add_child(newBox)
+			

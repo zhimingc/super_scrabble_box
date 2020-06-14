@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/MainGame.gd" type="Script" id=1]
 [ext_resource path="res://Objects/PlayerCharacter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/BasicEnemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Level_0.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/LetterBox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Level_0.tscn" type="PackedScene" id=5]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource( 1 )
 Player = ExtResource( 2 )
 Enemy_Basic = ExtResource( 3 )
+LetterBox = ExtResource( 4 )
 
-[node name="Level_0" parent="." instance=ExtResource( 4 )]
+[node name="Level_0" parent="." instance=ExtResource( 5 )]
 
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2( 480, -20 )
@@ -19,5 +21,23 @@ position = Vector2( 480, -20 )
 position = Vector2( 459.273, 314.598 )
 
 [node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 5.0
 autostart = true
+
+[node name="LetterSpawns" type="Node2D" parent="."]
+
+[node name="Spawn" type="Node2D" parent="LetterSpawns"]
+position = Vector2( 125, 455 )
+
+[node name="Spawn4" type="Node2D" parent="LetterSpawns"]
+position = Vector2( 125, 265 )
+
+[node name="Spawn2" type="Node2D" parent="LetterSpawns"]
+position = Vector2( 830, 455 )
+
+[node name="Spawn5" type="Node2D" parent="LetterSpawns"]
+position = Vector2( 830, 265 )
+
+[node name="Spawn3" type="Node2D" parent="LetterSpawns"]
+position = Vector2( 475, 355 )
 
