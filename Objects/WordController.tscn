@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/WordController.gd" type="Script" id=1]
+[ext_resource path="res://Objects/HUD_LetterElement.tscn" type="PackedScene" id=2]
+
+[node name="WordController" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="Held" type="Node2D" parent="."]
+
+[node name="TextureRect_0" parent="Held" instance=ExtResource( 2 )]
+margin_left = 50.0
+margin_top = 400.0
+margin_right = 100.0
+margin_bottom = 450.0
+
+[node name="TextureRect_1" parent="Held" instance=ExtResource( 2 )]
+margin_left = 125.0
+margin_top = 400.0
+margin_right = 175.0
+margin_bottom = 450.0
+
+[node name="TextureRect_2" parent="Held" instance=ExtResource( 2 )]
+margin_left = 200.0
+margin_top = 400.0
+margin_right = 250.0
+margin_bottom = 450.0
+
+[node name="TextureRect_3" parent="Held" instance=ExtResource( 2 )]
+margin_left = 275.0
+margin_top = 400.0
+margin_right = 325.0
+margin_bottom = 450.0
+
+[node name="TextureRect_4" parent="Held" instance=ExtResource( 2 )]
+margin_left = 350.0
+margin_top = 400.0
+margin_right = 400.0
+margin_bottom = 450.0
+
+[node name="TextureRect_5" parent="Held" instance=ExtResource( 2 )]
+margin_left = 425.0
+margin_top = 400.0
+margin_right = 475.0
+margin_bottom = 450.0
+
+[node name="Used" type="Node2D" parent="."]
+
+[node name="TextureRect_8" parent="Used" instance=ExtResource( 2 )]
+margin_left = 225.0
+margin_top = 140.0
+margin_right = 275.0
+margin_bottom = 190.0
+rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="TextureRect_6" parent="Used" instance=ExtResource( 2 )]
+margin_left = 300.0
+margin_top = 140.0
+margin_right = 350.0
+margin_bottom = 190.0
+rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="TextureRect_7" parent="Used" instance=ExtResource( 2 )]
+margin_left = 375.0
+margin_top = 140.0
+margin_right = 425.0
+margin_bottom = 190.0
+rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="TextureRect_9" parent="Used" instance=ExtResource( 2 )]
+margin_left = 450.0
+margin_top = 140.0
+margin_right = 500.0
+margin_bottom = 190.0
+rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="TextureRect_11" parent="Used" instance=ExtResource( 2 )]
+margin_left = 525.0
+margin_top = 140.0
+margin_right = 575.0
+margin_bottom = 190.0
+rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="TextureRect_10" parent="Used" instance=ExtResource( 2 )]
+margin_left = 600.0
+margin_top = 140.0
+margin_right = 650.0
+margin_bottom = 190.0
+rect_scale = Vector2( 1.5, 1.5 )
+

@@ -15,6 +15,7 @@ var letterSlot = []
 
 class LetterSlot:
 	var inUse : bool
+	var inTyping : bool
 	var letter: String
 
 # Called when the node enters the scene tree for the first time.
@@ -82,3 +83,22 @@ func get_valid_slot():
 		if letterSlot[i].inUse == false:
 			return i
 	return -1
+	
+func get_letters():
+	var letters = []
+	for i in letterSlot:
+		if i.inUse:
+			letters.push_back(i)
+	return letters
+	
+func hide_letters():
+	for i in letterHud:
+		i.visible = false
+	
+func update_letters():
+	hide_letters()
+	var letters = get_letters()
+	for i in letters.size():
+		letterHud[i].visible = true
+		letterHud[i].get_node("Label").text = letters[i].letter
+	

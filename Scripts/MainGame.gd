@@ -15,7 +15,7 @@ func _ready():
 func _unhandled_key_input(event):
 	if !event.echo:
 		if event.pressed:
-			if event.scancode == KEY_SPACE:
+			if event.scancode == KEY_T:
 				debug_spawn_player()
 			if event.scancode == KEY_E:
 				spawn_enemy()
@@ -44,6 +44,7 @@ func spawn_letterBox():
 	while true:
 		spawnIdx = randi() % letterSpawns.size()
 		if spawnIdx != oldLetterSpawn:
+			oldLetterSpawn = spawnIdx
 			break
 	var newBox = LetterBox.instance()
 	newBox.position = letterSpawns[spawnIdx].position
