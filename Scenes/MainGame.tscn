@@ -20,6 +20,7 @@ position = Vector2( 480, -20 )
 
 [node name="PlayerCharacter" parent="." instance=ExtResource( 2 )]
 position = Vector2( 459.273, 314.598 )
+z_index = 1
 
 [node name="EnemyTimer" type="Timer" parent="."]
 wait_time = 5.0

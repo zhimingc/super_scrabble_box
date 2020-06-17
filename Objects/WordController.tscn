@@ -1,91 +1,132 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/WordController.gd" type="Script" id=1]
-[ext_resource path="res://Objects/HUD_LetterElement.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Textures/square_small.png" type="Texture" id=2]
+[ext_resource path="res://Objects/HUD_LetterElement.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Fonts/DisposableDroidBB.otf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+use_filter = true
+font_data = ExtResource( 4 )
 
 [node name="WordController" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 1 )
 
-[node name="Held" type="Node2D" parent="."]
+[node name="Overlay" type="TextureRect" parent="."]
+visible = false
+modulate = Color( 0.34902, 0.34902, 0.34902, 0.588235 )
+margin_right = 960.0
+margin_bottom = 540.0
+texture = ExtResource( 2 )
+stretch_mode = 1
 
-[node name="TextureRect_0" parent="Held" instance=ExtResource( 2 )]
+[node name="Held" type="Node2D" parent="."]
+position = Vector2( 190, -30 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TextureRect_0" parent="Held" instance=ExtResource( 3 )]
 margin_left = 50.0
 margin_top = 400.0
 margin_right = 100.0
 margin_bottom = 450.0
 
-[node name="TextureRect_1" parent="Held" instance=ExtResource( 2 )]
+[node name="TextureRect_1" parent="Held" instance=ExtResource( 3 )]
 margin_left = 125.0
 margin_top = 400.0
 margin_right = 175.0
 margin_bottom = 450.0
 
-[node name="TextureRect_2" parent="Held" instance=ExtResource( 2 )]
+[node name="TextureRect_2" parent="Held" instance=ExtResource( 3 )]
 margin_left = 200.0
 margin_top = 400.0
 margin_right = 250.0
 margin_bottom = 450.0
 
-[node name="TextureRect_3" parent="Held" instance=ExtResource( 2 )]
+[node name="TextureRect_3" parent="Held" instance=ExtResource( 3 )]
 margin_left = 275.0
 margin_top = 400.0
 margin_right = 325.0
 margin_bottom = 450.0
 
-[node name="TextureRect_4" parent="Held" instance=ExtResource( 2 )]
+[node name="TextureRect_4" parent="Held" instance=ExtResource( 3 )]
 margin_left = 350.0
 margin_top = 400.0
 margin_right = 400.0
 margin_bottom = 450.0
 
-[node name="TextureRect_5" parent="Held" instance=ExtResource( 2 )]
+[node name="TextureRect_5" parent="Held" instance=ExtResource( 3 )]
 margin_left = 425.0
 margin_top = 400.0
 margin_right = 475.0
 margin_bottom = 450.0
 
 [node name="Used" type="Node2D" parent="."]
+position = Vector2( 0, 60 )
 
-[node name="TextureRect_8" parent="Used" instance=ExtResource( 2 )]
+[node name="TextureRect_8" parent="Used" instance=ExtResource( 3 )]
 margin_left = 225.0
 margin_top = 140.0
 margin_right = 275.0
 margin_bottom = 190.0
 rect_scale = Vector2( 1.5, 1.5 )
 
-[node name="TextureRect_6" parent="Used" instance=ExtResource( 2 )]
+[node name="TextureRect_6" parent="Used" instance=ExtResource( 3 )]
 margin_left = 300.0
 margin_top = 140.0
 margin_right = 350.0
 margin_bottom = 190.0
 rect_scale = Vector2( 1.5, 1.5 )
 
-[node name="TextureRect_7" parent="Used" instance=ExtResource( 2 )]
+[node name="TextureRect_7" parent="Used" instance=ExtResource( 3 )]
 margin_left = 375.0
 margin_top = 140.0
 margin_right = 425.0
 margin_bottom = 190.0
 rect_scale = Vector2( 1.5, 1.5 )
 
-[node name="TextureRect_9" parent="Used" instance=ExtResource( 2 )]
+[node name="TextureRect_9" parent="Used" instance=ExtResource( 3 )]
 margin_left = 450.0
 margin_top = 140.0
 margin_right = 500.0
 margin_bottom = 190.0
 rect_scale = Vector2( 1.5, 1.5 )
 
-[node name="TextureRect_11" parent="Used" instance=ExtResource( 2 )]
+[node name="TextureRect_11" parent="Used" instance=ExtResource( 3 )]
 margin_left = 525.0
 margin_top = 140.0
 margin_right = 575.0
 margin_bottom = 190.0
 rect_scale = Vector2( 1.5, 1.5 )
 
-[node name="TextureRect_10" parent="Used" instance=ExtResource( 2 )]
+[node name="TextureRect_10" parent="Used" instance=ExtResource( 3 )]
 margin_left = 600.0
 margin_top = 140.0
 margin_right = 650.0
 margin_bottom = 190.0
 rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="WordValid" type="TextureRect" parent="."]
+modulate = Color( 0.494118, 0.839216, 0.352941, 1 )
+margin_left = 225.0
+margin_top = 150.0
+margin_right = 325.0
+margin_bottom = 190.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="WordValid"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 100.0
+margin_bottom = 40.0
+custom_fonts/font = SubResource( 1 )
+text = "Valid"
+align = 1
+valign = 1
 

@@ -4,8 +4,22 @@ export (PackedScene) var Player
 export (PackedScene) var Enemy_Basic
 export (PackedScene) var LetterBox
 
+var dictionaryPath = "res://scrabbleDict.txt"
 var letterSpawns = []
 var oldLetterSpawn = -1
+
+func _init():
+	GlobalConstants.populate_letterPool()
+	load_dict(dictionaryPath)
+
+func load_dict(file):
+	var f = File.new()
+	f.open(file, File.READ)
+	var index = 1
+	while not f.eof_reached(): # iterate through all lines until the end of file is reached
+		var line = f.get_line()
+		GlobalConstants.dict[line.to_lower()] = 0
+	f.close()
 
 func _ready():
 	$EnemyTimer.connect("timeout", self, "spawn_enemy")

@@ -6,12 +6,17 @@ signal collected
 
 func _ready():
 	randomize()
-	var conv = PoolByteArray()
-	conv.append(65 + randi() % 26)
-	letter = conv.get_string_from_ascii()
+	var poolSize = GlobalConstants.letterPool.size()
+	var retIdx = randi() % poolSize
+	letter = GlobalConstants.letterPool[retIdx]
+	GlobalConstants.letterPool.remove(retIdx)
+	if GlobalConstants.letterPool.size() == 0:
+		GlobalConstants.populate_letterPool()
 
 func _on_LetterBox_body_entered(body):
 	if body.name == "PlayerCharacter":
+		if body.get_valid_slot() == -1:
+			return
 		body.add_letter(letter)
 		queue_free()
 		emit_signal("collected")
