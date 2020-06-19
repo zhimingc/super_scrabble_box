@@ -97,8 +97,27 @@ func hide_letters():
 	
 func update_letters():
 	hide_letters()
-	var letters = get_letters()
-	for i in letters.size():
-		letterHud[i].visible = true
-		letterHud[i].get_node("Label").text = letters[i].letter
+	for i in letterSlot.size():
+		if letterSlot[i].inUse:
+			letterHud[i].visible = true
+			letterHud[i].get_node("Label").text = letterSlot[i].letter
 	
+func get_closest_enemies():
+	var enemies = []
+	var closest = []
+	enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		if enemy.isDead or enemy.isTargeted:
+			continue
+		var dist = position.distance_to(enemy.position)
+		if closest.size() == 0:
+			closest.push_back(enemy)
+		else:
+			for i in closest.size():
+				var unitDist = position.distance_to(closest[i].position)
+				if dist < unitDist:
+					closest.insert(i, enemy)
+					break
+				elif i == closest.size() - 1:
+					closest.push_back(enemy)
+	return closest

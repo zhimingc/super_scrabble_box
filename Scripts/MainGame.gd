@@ -4,6 +4,7 @@ export (PackedScene) var Player
 export (PackedScene) var Enemy_Basic
 export (PackedScene) var LetterBox
 
+var pc : PlayerCharacter
 var dictionaryPath = "res://scrabbleDict.txt"
 var letterSpawns = []
 var oldLetterSpawn = -1
@@ -22,6 +23,7 @@ func load_dict(file):
 	f.close()
 
 func _ready():
+	pc = $PlayerCharacter
 	$EnemyTimer.connect("timeout", self, "spawn_enemy")
 	letterSpawns = $LetterSpawns.get_children()
 	spawn_letterBox()
@@ -33,9 +35,6 @@ func _unhandled_key_input(event):
 				debug_spawn_player()
 			if event.scancode == KEY_E:
 				spawn_enemy()
-			if event.scancode == KEY_Q:
-				if $PlayerCharacter.can_take_letter():
-					$PlayerCharacter.add_letter("A")
 			if event.scancode == KEY_R:
 				spawn_letterBox()
 
@@ -49,6 +48,8 @@ func spawn_enemy():
 	newEnemy.position = $Spawner.position
 	newEnemy.connect("respawn", self, "respawn_enemy")	
 	add_child(newEnemy, true)
+	if $EnemyTimer.wait_time > 1.0:
+		$EnemyTimer.wait_time -= 0.5
 	
 func respawn_enemy(obj):
 	obj.position = $Spawner.position
@@ -64,4 +65,3 @@ func spawn_letterBox():
 	newBox.position = letterSpawns[spawnIdx].position
 	newBox.connect("collected", self, "spawn_letterBox")
 	add_child(newBox)
-			

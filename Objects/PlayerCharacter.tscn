@@ -40,9 +40,7 @@ margin_bottom = -10.0
 
 [node name="TextureRect2" parent="." instance=ExtResource( 3 )]
 visible = false
-margin_left = -25.0
 margin_top = -90.0
-margin_right = 25.0
 margin_bottom = -40.0
 
 [node name="TextureRect3" parent="." instance=ExtResource( 3 )]
@@ -55,17 +53,19 @@ margin_bottom = -10.0
 [node name="TextureRect5" parent="." instance=ExtResource( 3 )]
 visible = false
 margin_left = -90.0
+margin_top = 0.0
 margin_right = -40.0
+margin_bottom = 50.0
 
 [node name="TextureRect6" parent="." instance=ExtResource( 3 )]
 visible = false
-margin_left = -25.0
-margin_top = 40.0
-margin_right = 25.0
-margin_bottom = 90.0
+margin_top = 40.16
+margin_bottom = 90.16
 
 [node name="TextureRect4" parent="." instance=ExtResource( 3 )]
 visible = false
 margin_left = 40.0
+margin_top = 0.0
 margin_right = 90.0
+margin_bottom = 50.0
 

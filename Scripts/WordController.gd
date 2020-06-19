@@ -1,5 +1,7 @@
 extends Node2D
 
+export (PackedScene) var LetterAttack
+
 var lettersHeldUI = []
 var lettersUsedUI = []
 var overlay : TextureRect
@@ -9,9 +11,13 @@ class_name PlayerCharacter
 
 var pc : PlayerCharacter
 var isPaused = false
+var oldPause = false
+var wordIsValid = false
 var currentIdx = -1
 var currentLettersIdx = []
 var heldLetters = []
+
+signal word_attack(word)
 
 func _ready():
 	currentLettersIdx.resize(6)	
@@ -35,6 +41,21 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("ui_select"):
 		toggle_pause()
+	if Input.is_action_just_pressed("ui_accept") and isPaused:
+		if wordIsValid:
+			toggle_pause()
+			#emit_signal("wordAttack", get_current_word())
+			word_attack(get_current_word())
+			# delete letters used
+			for i in currentLettersIdx:
+				if i != null:
+					heldLetters[i].inUse = false
+			pc.update_letters()
+			update_lettersHeld(pc.get_letters())
+	
+	# update ui one frame slower to avoid pause stopping behaviour
+	if oldPause != isPaused:
+		oldPause = isPaused
 		if (isPaused):
 			update_lettersHeld(pc.get_letters())
 			pc.hide_letters()
@@ -42,19 +63,16 @@ func _process(delta):
 		else:
 			pc.update_letters()
 			hide_letters()
-	if Input.is_action_just_pressed("ui_accept") and isPaused:
-		var currentWord = ""
-		for i in currentLettersIdx:
-			if i != null:
-				currentWord += heldLetters[i].letter
-		if currentWord != "" and GlobalConstants.dict.has(currentWord.to_lower()):
-			print(true)
 
-func check_word():
+func get_current_word():
 	var currentWord = ""
 	for i in currentLettersIdx:
 		if i != null:
 			currentWord += heldLetters[i].letter
+	return currentWord
+
+func check_word():
+	var currentWord = get_current_word()
 	if currentWord != "" and GlobalConstants.dict.has(currentWord.to_lower()):
 		return true
 	return false
@@ -95,7 +113,8 @@ func _unhandled_key_input(event):
 			update_valid()
 
 func update_valid():
-	if check_word():
+	wordIsValid = check_word()
+	if wordIsValid:
 		validUI.visible = true
 	else:
 		validUI.visible = false
@@ -106,8 +125,8 @@ func toggle_pause():
 	get_tree().paused = isPaused	
 
 func init_wordMode():
-	for i in currentLettersIdx:
-		i = -1
+	for i in currentLettersIdx.size():
+		currentLettersIdx[i] = null
 
 func hide_letters():
 	currentIdx = -1
@@ -124,3 +143,14 @@ func update_lettersHeld(letters):
 		heldLetters[i].inTyping = false
 		lettersHeldUI[i].visible = true
 		lettersHeldUI[i].get_node("Label").text = letters[i].letter
+		
+func word_attack(word):
+	var enemies = pc.get_closest_enemies()
+	for i in word.length():
+		if i >= enemies.size():
+			break
+		var newAttack = LetterAttack.instance()
+		newAttack.position = lettersUsedUI[i].rect_global_position
+		newAttack.init(enemies[i], word[i])
+		add_child(newAttack)
+		enemies[i].isTargeted = true
