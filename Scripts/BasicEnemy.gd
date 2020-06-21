@@ -17,6 +17,7 @@ signal respawn(obj)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	moveDir = 1 if randi() % 2 == 1 else -1
+	set_targeted(false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -63,3 +64,6 @@ func set_buff():
 	speed *= 2.0
 	$AnimatedSprite.set_modulate(Color.coral)
 	isBuff = true
+
+func set_targeted(flag):
+	$TargetUI.visible = flag

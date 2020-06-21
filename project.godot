@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="super_scrabble_box"
+config/name="Super Letter Box"
 run/main_scene="res://Scenes/MainGame.tscn"
 config/icon="res://icon.png"
 
@@ -49,4 +49,3 @@ ui_accept={
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
-environment/default_environment="res://default_env.tres"

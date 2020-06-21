@@ -5,7 +5,7 @@ export var jumpForce = 100.0
 export var mass = 10.0
 export var drag = Vector2(0.875,0.925)
 
-signal hit
+signal player_die
 
 var maxLetter = 6
 var acceleration = Vector2()
@@ -58,7 +58,7 @@ func _physics_process(delta):
 
 func update_jump_forces(delta):
 	if is_on_ceiling():
-		velocity.y = 0.0
+		velocity.y *= 0.75
 
 func update_internal_forces(delta):
 	velocity *= drag
@@ -68,6 +68,7 @@ func jump():
 	
 func die():
 	queue_free()
+	emit_signal("player_die")
 
 func can_take_letter():
 	#return get_valid_slot() != -1

@@ -9,6 +9,7 @@ var dictionaryPath = "res://scrabbleDict.txt"
 var letterSpawns = []
 var oldLetterSpawn = -1
 var score = 0
+var gameover = false
 
 func _init():
 	GlobalConstants.populate_letterPool()
@@ -38,7 +39,11 @@ func _unhandled_key_input(event):
 			if event.scancode == KEY_E:
 				spawn_enemy()
 			if event.scancode == KEY_R:
-				spawn_letterBox()
+				if gameover:
+					reload_game()
+
+func reload_game():
+	get_tree().reload_current_scene()
 
 func debug_spawn_player():
 	var newPlayer = Player.instance()
@@ -76,3 +81,8 @@ func add_score():
 	
 func update_score_display():
 	$ScoreDisplay.text = String(score)
+
+
+func _on_PlayerCharacter_player_die():
+	gameover = true
+	$UI/Restart.visible = true

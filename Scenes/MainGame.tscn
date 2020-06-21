@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/MainGame.gd" type="Script" id=1]
 [ext_resource path="res://Objects/PlayerCharacter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/BasicEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Objects/LetterBox.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Level_0.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Objects/WordController.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Objects/HUD_Score.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Fonts/pixel_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Scenes/Level_0.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/WordController.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Objects/HUD_Score.tscn" type="PackedScene" id=8]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,14 +15,39 @@ Player = ExtResource( 2 )
 Enemy_Basic = ExtResource( 3 )
 LetterBox = ExtResource( 4 )
 
-[node name="Level_0" parent="." instance=ExtResource( 5 )]
+[node name="UI" type="Node2D" parent="."]
+editor/display_folded = true
+z_index = 5
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Restart" type="CenterContainer" parent="UI"]
+visible = false
+margin_right = 960.0
+margin_bottom = 540.0
+
+[node name="RestartText" type="Label" parent="UI/Restart"]
+margin_left = 348.0
+margin_top = 244.0
+margin_right = 611.0
+margin_bottom = 295.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "R to restart"
+align = 1
+valign = 1
+
+[node name="Level_0" parent="." instance=ExtResource( 6 )]
 
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2( 480, -20 )
 
 [node name="PlayerCharacter" parent="." instance=ExtResource( 2 )]
-position = Vector2( 459.273, 314.598 )
-z_index = 1
+position = Vector2( 335, 335 )
+mass = 3.5
 
 [node name="EnemyTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -45,10 +71,9 @@ position = Vector2( 830, 265 )
 [node name="Spawn3" type="Node2D" parent="LetterSpawns"]
 position = Vector2( 475, 355 )
 
-[node name="WordController" parent="." instance=ExtResource( 6 )]
-z_index = 1
+[node name="WordController" parent="." instance=ExtResource( 7 )]
 
-[node name="ScoreDisplay" parent="." instance=ExtResource( 7 )]
+[node name="ScoreDisplay" parent="." instance=ExtResource( 8 )]
 margin_left = 425.0
 margin_top = -10.0
 margin_right = 543.0
@@ -58,4 +83,5 @@ custom_constants/shadow_offset_x = 5
 custom_constants/shadow_offset_y = 3
 custom_constants/shadow_as_outline = 0
 
+[connection signal="player_die" from="PlayerCharacter" to="." method="_on_PlayerCharacter_player_die"]
 [connection signal="word_attack" from="WordController" to="." method="_on_WordController_word_attack"]

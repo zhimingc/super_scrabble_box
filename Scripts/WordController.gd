@@ -4,7 +4,7 @@ export (PackedScene) var LetterAttack
 
 var lettersHeldUI = []
 var lettersUsedUI = []
-var overlay : TextureRect
+var overlay : Node2D
 var validUI : TextureRect
 
 class_name PlayerCharacter
@@ -16,6 +16,7 @@ var wordIsValid = false
 var currentIdx = -1
 var currentLettersIdx = []
 var heldLetters = []
+var enemies = []
 
 signal word_attack(word)
 
@@ -26,7 +27,7 @@ func _ready():
 		if x.name == "WordValid":
 			validUI = x
 			validUI.visible = false
-		if x.name == "Overlay":
+		if x.name == "OverlayNode":
 			overlay = x
 			overlay.visible = false
 		if x.name == "Held":
@@ -118,16 +119,26 @@ func _unhandled_key_input(event):
 			update_valid()
 
 func update_valid():
+	var word = get_current_word()
 	wordIsValid = check_word()
 	if wordIsValid:
 		validUI.visible = true
+		for i in enemies.size():
+			if i < word.length():
+				enemies[i].set_targeted(true)
+			else:
+				enemies[i].set_targeted(false)
 	else:
 		validUI.visible = false
+		for i in enemies:
+			i.set_targeted(false)
 
 func toggle_pause():
 	isPaused = !isPaused
 	overlay.visible = isPaused
 	get_tree().paused = isPaused	
+	if isPaused:
+		enemies = pc.get_closest_enemies()	
 
 func init_wordMode():
 	for i in currentLettersIdx.size():
@@ -150,7 +161,6 @@ func update_lettersHeld(letters):
 		lettersHeldUI[i].get_node("Label").text = letters[i].letter
 		
 func word_attack(word):
-	var enemies = pc.get_closest_enemies()
 	for i in word.length():
 		if i >= enemies.size():
 			break

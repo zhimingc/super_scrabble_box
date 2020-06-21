@@ -29,12 +29,12 @@ position = Vector2( 125.434, 481.614 )
 scale = Vector2( 1.00339, -1.52302 )
 
 [node name="Platform3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 314.623, 513.797 )
-scale = Vector2( 1.00339, -1.52302 )
+position = Vector2( 314.623, 525.137 )
+scale = Vector2( 1.00339, 3 )
 
 [node name="Platform4" parent="." instance=ExtResource( 4 )]
-position = Vector2( 651.291, 512.524 )
-scale = Vector2( 1.00339, -1.52302 )
+position = Vector2( 651.291, 525.137 )
+scale = Vector2( 1.00339, 3 )
 
 [node name="Platform5" parent="." instance=ExtResource( 4 )]
 position = Vector2( 846.762, 480.106 )

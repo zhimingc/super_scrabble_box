@@ -20,6 +20,7 @@ extents = Vector2( 27.252, 27.0215 )
 [node name="PlayerCharacter" type="KinematicBody2D"]
 position = Vector2( 231.374, 444.92 )
 scale = Vector2( 0.5, 0.5 )
+z_index = 1
 script = ExtResource( 1 )
 runSpeed = 20.0
 jumpForce = 675.0
