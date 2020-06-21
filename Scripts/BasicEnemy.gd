@@ -10,6 +10,7 @@ var bounce = 5
 var wallBounce = 0
 var isDead = false
 var isTargeted = false
+var isBuff = false
 
 signal respawn(obj)
 
@@ -55,3 +56,10 @@ func set_dead():
 	
 func die():
 	queue_free()
+
+func set_buff():
+	if isBuff: 
+		return
+	speed *= 2.0
+	$AnimatedSprite.set_modulate(Color.coral)
+	isBuff = true

@@ -1,9 +1,8 @@
 extends Node
 
 var gravity = 9.8
-
+var isVowelWindow = [ false, true ]
 var letterPool = []
-
 var letterCounts = [
 	9, # A
 	2, # B
@@ -32,6 +31,8 @@ var letterCounts = [
 	2, # Y
 	0, # Z
 ]
+
+var vowels = [ "A", "E", "I", "O", "U" ]
 
 var dict : Dictionary
 

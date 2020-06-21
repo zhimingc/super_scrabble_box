@@ -39,19 +39,24 @@ func _ready():
 	hide_letters()	
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_select"):
-		toggle_pause()
-	if Input.is_action_just_pressed("ui_accept") and isPaused:
-		if wordIsValid:
+	#if Input.is_action_just_pressed("ui_select"):
+	#	toggle_pause()
+	if Input.is_action_just_pressed("ui_accept"):
+		if isPaused:
+			if wordIsValid:
+				toggle_pause()
+				#emit_signal("wordAttack", get_current_word())
+				word_attack(get_current_word())
+				# delete letters used
+				for i in currentLettersIdx:
+					if i != null:
+						heldLetters[i].inUse = false
+				pc.update_letters()
+				update_lettersHeld(pc.get_letters())
+			else:
+				toggle_pause()
+		else:
 			toggle_pause()
-			#emit_signal("wordAttack", get_current_word())
-			word_attack(get_current_word())
-			# delete letters used
-			for i in currentLettersIdx:
-				if i != null:
-					heldLetters[i].inUse = false
-			pc.update_letters()
-			update_lettersHeld(pc.get_letters())
 	
 	# update ui one frame slower to avoid pause stopping behaviour
 	if oldPause != isPaused:
@@ -150,7 +155,7 @@ func word_attack(word):
 		if i >= enemies.size():
 			break
 		var newAttack = LetterAttack.instance()
-		newAttack.position = lettersUsedUI[i].rect_global_position
+		newAttack.position = pc.position
 		newAttack.init(enemies[i], word[i])
 		add_child(newAttack)
 		enemies[i].isTargeted = true

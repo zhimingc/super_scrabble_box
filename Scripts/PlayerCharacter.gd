@@ -7,11 +7,13 @@ export var drag = Vector2(0.875,0.925)
 
 signal hit
 
+var maxLetter = 6
 var acceleration = Vector2()
 var velocity = Vector2()
 var grav_suppress = 0.0
 var letterHud = []
 var letterSlot = []
+var hudIdx = 0
 
 class LetterSlot:
 	var inUse : bool
@@ -26,7 +28,6 @@ func _ready():
 			letterHud.push_back(x)
 			var newSlot = LetterSlot.new()
 			newSlot.inUse = false
-			letterSlot.push_back(newSlot)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -48,12 +49,12 @@ func _physics_process(delta):
 	velocity += acceleration * 100;
 	var collision_info = move_and_slide(velocity * delta, Vector2.UP)
 	
-	# collision detection
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		var groups = collision.collider.get_groups()
-		if collision and groups.has("enemy"):
-			die()
+#	# collision detection
+#	for i in get_slide_count():
+#		var collision = get_slide_collision(i)
+#		var groups = collision.collider.get_groups()
+#		if collision and groups.has("enemy"):
+#			die()
 
 func update_jump_forces(delta):
 	if is_on_ceiling():
@@ -69,15 +70,19 @@ func die():
 	queue_free()
 
 func can_take_letter():
-	return get_valid_slot() != -1
+	#return get_valid_slot() != -1
+	return letterSlot.size() < maxLetter;
 
 func add_letter(letter):
 	var idx = get_valid_slot()
-	letterSlot[idx].inUse = true
-	letterSlot[idx].letter = letter
-	letterHud[idx].visible = true
-	letterHud[idx].get_node("Label").text = letter
-
+	var newLetter = LetterSlot.new()
+	newLetter.inUse = true
+	newLetter.letter = letter
+	letterSlot.push_back(newLetter)
+	#letterSlot[idx].inUse = true
+	#letterSlot[idx].letter = letter
+	update_letters()
+	
 func get_valid_slot():
 	for i in letterSlot.size():
 		if letterSlot[i].inUse == false:
@@ -97,10 +102,13 @@ func hide_letters():
 	
 func update_letters():
 	hide_letters()
+	letterSlot = get_letters()
+	hudIdx = 0
 	for i in letterSlot.size():
 		if letterSlot[i].inUse:
-			letterHud[i].visible = true
-			letterHud[i].get_node("Label").text = letterSlot[i].letter
+			letterHud[hudIdx].visible = true
+			letterHud[hudIdx].get_node("Label").text = letterSlot[i].letter
+			hudIdx += 1
 	
 func get_closest_enemies():
 	var enemies = []
@@ -121,3 +129,8 @@ func get_closest_enemies():
 				elif i == closest.size() - 1:
 					closest.push_back(enemy)
 	return closest
+
+
+func _on_PlayerAreaCollision_body_entered(body):
+	if body.is_in_group("enemy"):
+		die()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/MainGame.gd" type="Script" id=1]
 [ext_resource path="res://Objects/PlayerCharacter.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Objects/LetterBox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Level_0.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/WordController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/HUD_Score.tscn" type="PackedScene" id=7]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource( 1 )
@@ -46,5 +47,15 @@ position = Vector2( 475, 355 )
 
 [node name="WordController" parent="." instance=ExtResource( 6 )]
 z_index = 1
+
+[node name="ScoreDisplay" parent="." instance=ExtResource( 7 )]
+margin_left = 425.0
+margin_top = -10.0
+margin_right = 543.0
+margin_bottom = 116.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 3
+custom_constants/shadow_as_outline = 0
 
 [connection signal="word_attack" from="WordController" to="." method="_on_WordController_word_attack"]

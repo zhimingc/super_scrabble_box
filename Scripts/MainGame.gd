@@ -8,6 +8,7 @@ var pc : PlayerCharacter
 var dictionaryPath = "res://scrabbleDict.txt"
 var letterSpawns = []
 var oldLetterSpawn = -1
+var score = 0
 
 func _init():
 	GlobalConstants.populate_letterPool()
@@ -27,6 +28,7 @@ func _ready():
 	$EnemyTimer.connect("timeout", self, "spawn_enemy")
 	letterSpawns = $LetterSpawns.get_children()
 	spawn_letterBox()
+	update_score_display()	
 
 func _unhandled_key_input(event):
 	if !event.echo:
@@ -48,11 +50,12 @@ func spawn_enemy():
 	newEnemy.position = $Spawner.position
 	newEnemy.connect("respawn", self, "respawn_enemy")	
 	add_child(newEnemy, true)
-	if $EnemyTimer.wait_time > 1.0:
-		$EnemyTimer.wait_time -= 0.5
+	if $EnemyTimer.wait_time > 2.5:
+		$EnemyTimer.wait_time -= 0.25
 	
 func respawn_enemy(obj):
 	obj.position = $Spawner.position
+	obj.set_buff()
 	
 func spawn_letterBox():
 	var spawnIdx = 0
@@ -64,4 +67,12 @@ func spawn_letterBox():
 	var newBox = LetterBox.instance()
 	newBox.position = letterSpawns[spawnIdx].position
 	newBox.connect("collected", self, "spawn_letterBox")
+	newBox.connect("collected", self, "add_score")
 	add_child(newBox)
+
+func add_score():
+	score += 1
+	update_score_display()
+	
+func update_score_display():
+	$ScoreDisplay.text = String(score)
