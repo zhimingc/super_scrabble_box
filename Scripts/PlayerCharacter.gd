@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name PlayerCharacter
+
 export var runSpeed = 2.5
 export var jumpForce = 100.0
 export var mass = 10.0
@@ -49,12 +51,9 @@ func _physics_process(delta):
 	velocity += acceleration * 100;
 	var collision_info = move_and_slide(velocity * delta, Vector2.UP)
 	
-#	# collision detection
-#	for i in get_slide_count():
-#		var collision = get_slide_collision(i)
-#		var groups = collision.collider.get_groups()
-#		if collision and groups.has("enemy"):
-#			die()
+#	# visual update
+	if abs(velocity.x) > 0:
+		$PC_Sprite.flip_h = velocity.x < 0
 
 func update_jump_forces(delta):
 	if is_on_ceiling():

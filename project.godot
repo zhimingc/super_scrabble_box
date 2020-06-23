@@ -9,10 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "KinematicBody2D",
 "class": "PlayerCharacter",
 "language": "GDScript",
-"path": "res://Scripts/WordController.gd"
+"path": "res://Scripts/PlayerCharacter.gd"
 } ]
 _global_script_class_icons={
 "PlayerCharacter": ""

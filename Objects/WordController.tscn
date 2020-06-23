@@ -114,6 +114,7 @@ margin_bottom = 220.0
 rect_scale = Vector2( 1.5, 1.5 )
 
 [node name="WordValid" type="TextureRect" parent="."]
+editor/display_folded = true
 modulate = Color( 0.494118, 0.839216, 0.352941, 1 )
 margin_left = 260.0
 margin_top = 180.0

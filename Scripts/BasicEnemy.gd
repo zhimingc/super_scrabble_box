@@ -43,9 +43,9 @@ func _process(delta):
 		else:
 			emit_signal("respawn", self)
 	
-	# debug
-	#if Input.is_action_just_pressed("ui_accept"):
-	#	set_dead()
+	# visual update
+	if abs(velocity.x) > 0:
+		$AnimatedSprite.flip_h = velocity.x > 0
 		
 func set_dead():
 	isDead = true
@@ -54,6 +54,7 @@ func set_dead():
 	$CollisionShape2D.queue_free()
 	$AnimatedSprite.flip_v = true
 	velocity.y -= deathForce * accelScale
+	set_targeted(false)
 	
 func die():
 	queue_free()

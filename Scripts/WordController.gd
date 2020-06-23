@@ -7,9 +7,7 @@ var lettersUsedUI = []
 var overlay : Node2D
 var validUI : TextureRect
 
-class_name PlayerCharacter
-
-var pc : PlayerCharacter
+var player
 var isPaused = false
 var oldPause = false
 var wordIsValid = false
@@ -22,7 +20,7 @@ signal word_attack(word)
 
 func _ready():
 	currentLettersIdx.resize(6)	
-	pc = get_parent().get_node("PlayerCharacter")
+	player = get_parent().get_node("PlayerCharacter")
 	for x in get_children():
 		if x.name == "WordValid":
 			validUI = x
@@ -52,8 +50,8 @@ func _process(delta):
 				for i in currentLettersIdx:
 					if i != null:
 						heldLetters[i].inUse = false
-				pc.update_letters()
-				update_lettersHeld(pc.get_letters())
+				player.update_letters()
+				update_lettersHeld(player.get_letters())
 			else:
 				toggle_pause()
 		else:
@@ -63,11 +61,11 @@ func _process(delta):
 	if oldPause != isPaused:
 		oldPause = isPaused
 		if (isPaused):
-			update_lettersHeld(pc.get_letters())
-			pc.hide_letters()
+			update_lettersHeld(player.get_letters())
+			player.hide_letters()
 			init_wordMode()
 		else:
-			pc.update_letters()
+			player.update_letters()
 			hide_letters()
 
 func get_current_word():
@@ -138,7 +136,7 @@ func toggle_pause():
 	overlay.visible = isPaused
 	get_tree().paused = isPaused	
 	if isPaused:
-		enemies = pc.get_closest_enemies()	
+		enemies = player.get_closest_enemies()	
 
 func init_wordMode():
 	for i in currentLettersIdx.size():
@@ -165,7 +163,7 @@ func word_attack(word):
 		if i >= enemies.size():
 			break
 		var newAttack = LetterAttack.instance()
-		newAttack.position = pc.position
+		newAttack.position = player.position
 		newAttack.init(enemies[i], word[i])
 		add_child(newAttack)
 		enemies[i].isTargeted = true

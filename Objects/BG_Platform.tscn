@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Textures/platform_0.png" type="Texture" id=1]
+
+[node name="PlatformRect" type="NinePatchRect"]
+show_behind_parent = true
+anchor_right = 1.0
+margin_left = -125.0
+margin_top = -10.0
+margin_right = 129.0
+margin_bottom = 10.0
+texture = ExtResource( 1 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+

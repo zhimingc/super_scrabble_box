@@ -4,7 +4,7 @@ export (PackedScene) var Player
 export (PackedScene) var Enemy_Basic
 export (PackedScene) var LetterBox
 
-var pc : PlayerCharacter
+var pc
 var dictionaryPath = "res://scrabbleDict.txt"
 var letterSpawns = []
 var oldLetterSpawn = -1

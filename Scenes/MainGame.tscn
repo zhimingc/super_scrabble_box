@@ -16,7 +16,6 @@ Enemy_Basic = ExtResource( 3 )
 LetterBox = ExtResource( 4 )
 
 [node name="UI" type="Node2D" parent="."]
-editor/display_folded = true
 z_index = 5
 __meta__ = {
 "_edit_lock_": true
@@ -47,6 +46,7 @@ position = Vector2( 480, -20 )
 
 [node name="PlayerCharacter" parent="." instance=ExtResource( 2 )]
 position = Vector2( 335, 335 )
+z_index = 2
 mass = 3.5
 
 [node name="EnemyTimer" type="Timer" parent="."]
@@ -54,7 +54,6 @@ wait_time = 5.0
 autostart = true
 
 [node name="LetterSpawns" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="Spawn" type="Node2D" parent="LetterSpawns"]
 position = Vector2( 125, 455 )
@@ -72,6 +71,7 @@ position = Vector2( 830, 265 )
 position = Vector2( 475, 355 )
 
 [node name="WordController" parent="." instance=ExtResource( 7 )]
+position = Vector2( -0.843475, 0 )
 
 [node name="ScoreDisplay" parent="." instance=ExtResource( 8 )]
 margin_left = 425.0
@@ -82,6 +82,5 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 5
 custom_constants/shadow_offset_y = 3
 custom_constants/shadow_as_outline = 0
-
 [connection signal="player_die" from="PlayerCharacter" to="." method="_on_PlayerCharacter_player_die"]
 [connection signal="word_attack" from="WordController" to="." method="_on_WordController_word_attack"]
