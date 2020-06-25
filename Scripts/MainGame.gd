@@ -3,6 +3,7 @@ extends Node2D
 export (PackedScene) var Player
 export (PackedScene) var Enemy_Basic
 export (PackedScene) var LetterBox
+export (PackedScene) var BG_Cloud
 
 var pc
 var dictionaryPath = "res://scrabbleDict.txt"
@@ -10,6 +11,10 @@ var letterSpawns = []
 var oldLetterSpawn = -1
 var score = 0
 var gameover = false
+
+# bg vars
+var cloudRate = [ 8, 16 ]
+var cloudTimer = 0
 
 func _init():
 	GlobalConstants.populate_letterPool()
@@ -30,6 +35,9 @@ func _ready():
 	letterSpawns = $LetterSpawns.get_children()
 	spawn_letterBox()
 	update_score_display()	
+
+func _process(delta):
+	update_bg(delta)
 
 func _unhandled_key_input(event):
 	if !event.echo:
@@ -82,6 +90,16 @@ func add_score():
 func update_score_display():
 	$ScoreDisplay.text = String(score)
 
+func update_bg(delta):
+	cloudTimer -= delta
+	if cloudTimer <= 0:
+		spawn_cloud()
+		cloudTimer = cloudRate[0] + randi() % (cloudRate[1] - cloudRate[0])
+
+func spawn_cloud():
+	var newCloud = BG_Cloud.instance()
+	newCloud.position = Vector2(-55, 50 + randi() % 200)
+	add_child(newCloud)
 
 func _on_PlayerCharacter_player_die():
 	gameover = true

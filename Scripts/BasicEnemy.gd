@@ -46,6 +46,11 @@ func _process(delta):
 	# visual update
 	if abs(velocity.x) > 0:
 		$AnimatedSprite.flip_h = velocity.x > 0
+	if velocity.y > 1000:
+		$AnimatedSprite.set_animation("fall") 
+	else:
+		if $AnimatedSprite.get_animation() != "walk":
+			$AnimatedSprite.set_animation("walk")
 		
 func set_dead():
 	isDead = true
@@ -63,7 +68,8 @@ func set_buff():
 	if isBuff: 
 		return
 	speed *= 2.0
-	$AnimatedSprite.set_modulate(Color.coral)
+	$AnimatedSprite.set_modulate(Color.red)
+	$AnimatedSprite.set_speed_scale(1.5)
 	isBuff = true
 
 func set_targeted(flag):

@@ -40,7 +40,8 @@ func _ready():
 func _process(delta):
 	#if Input.is_action_just_pressed("ui_select"):
 	#	toggle_pause()
-	if Input.is_action_just_pressed("ui_accept"):
+
+	if Input.is_action_just_pressed("ui_accept") and is_instance_valid(player):
 		if isPaused:
 			if wordIsValid:
 				toggle_pause()
