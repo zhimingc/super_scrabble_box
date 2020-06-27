@@ -1,21 +1,67 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/PlayerCharacter.gd" type="Script" id=1]
-[ext_resource path="res://Textures/Player/slb_char_idle_0.png" type="Texture" id=2]
-[ext_resource path="res://Textures/Player/slb_char_idle_1.png" type="Texture" id=3]
+[ext_resource path="res://Textures/Player/slb_char_1-Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Textures/Player/slb_char_fall_0.png" type="Texture" id=3]
 [ext_resource path="res://Objects/HUD_LetterElement.tscn" type="PackedScene" id=4]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 112, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
 "loop": true,
 "name": "idle",
 "speed": 4.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "walk",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=11]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 27.252, 27.0215 )
 
 [node name="PlayerCharacter" type="KinematicBody2D"]
@@ -31,14 +77,13 @@ drag = Vector2( 0.875, 0.95 )
 [node name="PC_Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 3.25201, -13.84 )
 scale = Vector2( 5, 5 )
-frames = SubResource( 1 )
+frames = SubResource( 10 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="PC_Collider" type="CollisionShape2D" parent="."]
 scale = Vector2( 2.4, 2.4 )
-shape = SubResource( 2 )
+shape = SubResource( 11 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -90,5 +135,5 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerAreaCollision"]
 modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 0, 0.159973 )
-shape = SubResource( 3 )
+shape = SubResource( 12 )
 [connection signal="body_entered" from="PlayerAreaCollision" to="." method="_on_PlayerAreaCollision_body_entered"]

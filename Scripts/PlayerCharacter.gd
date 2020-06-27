@@ -52,6 +52,12 @@ func _physics_process(delta):
 	var collision_info = move_and_slide(velocity * delta, Vector2.UP)
 	
 #	# visual update
+	if velocity.y > 5000:
+		$PC_Sprite.set_animation("fall") 
+	elif abs(velocity.x) > 250:
+		$PC_Sprite.set_animation("walk")
+	else:
+		$PC_Sprite.set_animation("idle")
 	if abs(velocity.x) > 0:
 		$PC_Sprite.flip_h = velocity.x < 0
 
