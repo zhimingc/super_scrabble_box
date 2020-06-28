@@ -13,6 +13,7 @@ var isTargeted = false
 var isBuff = false
 
 signal respawn(obj)
+signal got_hit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,6 +61,7 @@ func set_dead():
 	$AnimatedSprite.flip_v = true
 	velocity.y -= deathForce * accelScale
 	set_targeted(false)
+	emit_signal("got_hit")
 	
 func die():
 	queue_free()

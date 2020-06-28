@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/MainGame.gd" type="Script" id=1]
 [ext_resource path="res://Objects/PlayerCharacter.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Objects/HUD_Score.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/BG_cloud.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Objects/PitParticles.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scripts/MainCamera.gd" type="Script" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0899796, 0, 0, Vector2( 0.996269, 0.409091 ), -1.35354, 0.0, 0, 0 ]
@@ -20,6 +21,11 @@ Player = ExtResource( 2 )
 Enemy_Basic = ExtResource( 3 )
 LetterBox = ExtResource( 4 )
 BG_Cloud = ExtResource( 9 )
+
+[node name="MainCamera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 11 )
 
 [node name="UI" type="Node2D" parent="."]
 z_index = 5

@@ -40,6 +40,7 @@ func _process(delta):
 	update_bg(delta)
 
 func _unhandled_key_input(event):
+	return # deactivates debug
 	if !event.echo:
 		if event.pressed:
 			if event.scancode == KEY_T:
@@ -49,6 +50,8 @@ func _unhandled_key_input(event):
 			if event.scancode == KEY_R:
 				if gameover:
 					reload_game()
+			if event.scancode == KEY_S:
+				$MainCamera.trigger_shake_cam(0.25)
 
 func reload_game():
 	get_tree().reload_current_scene()
@@ -62,10 +65,14 @@ func spawn_enemy():
 	var newEnemy = Enemy_Basic.instance()
 	newEnemy.position = $Spawner.position
 	newEnemy.connect("respawn", self, "respawn_enemy")	
+	newEnemy.connect("got_hit", self, "trigger_cam_shake")
 	add_child(newEnemy, true)
 	if $EnemyTimer.wait_time > 2.5:
 		$EnemyTimer.wait_time -= 0.25
-	
+
+func trigger_cam_shake():
+	$MainCamera.trigger_shake_cam(0.25)
+
 func respawn_enemy(obj):
 	obj.position = $Spawner.position
 	obj.set_buff()
@@ -99,7 +106,7 @@ func update_bg(delta):
 func spawn_cloud():
 	var newCloud = BG_Cloud.instance()
 	newCloud.position = Vector2(-55, 50 + randi() % 200)
-	add_child(newCloud)
+	add_child(newCloud) 
 
 func _on_PlayerCharacter_player_die():
 	gameover = true
