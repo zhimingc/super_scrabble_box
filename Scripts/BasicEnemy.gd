@@ -62,6 +62,7 @@ func set_dead():
 	velocity.y -= deathForce * accelScale
 	set_targeted(false)
 	emit_signal("got_hit")
+	GlobalConstants.emit_signal("play_sfx", "hit")
 	
 func die():
 	queue_free()

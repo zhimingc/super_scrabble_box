@@ -61,6 +61,10 @@ func _physics_process(delta):
 	if abs(velocity.x) > 0:
 		$PC_Sprite.flip_h = velocity.x < 0
 
+func _process(delta):
+	if position.y > get_viewport_rect().size.y + 25:
+		die()
+
 func update_jump_forces(delta):
 	if is_on_ceiling():
 		velocity.y *= 0.75
@@ -70,6 +74,7 @@ func update_internal_forces(delta):
 	
 func jump():
 	acceleration.y -= jumpForce
+	GlobalConstants.emit_signal("play_sfx", "jump")
 	
 func die():
 	queue_free()

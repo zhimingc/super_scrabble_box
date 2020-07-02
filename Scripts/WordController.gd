@@ -168,3 +168,4 @@ func word_attack(word):
 		newAttack.init(enemies[i], word[i])
 		add_child(newAttack)
 		enemies[i].isTargeted = true
+		GlobalConstants.emit_signal("play_sfx", "pew")

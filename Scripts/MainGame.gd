@@ -40,18 +40,24 @@ func _process(delta):
 	update_bg(delta)
 
 func _unhandled_key_input(event):
-	return # deactivates debug
 	if !event.echo:
 		if event.pressed:
+			if event.scancode == KEY_R:
+				if gameover:
+					reload_game()					
+			if event.scancode == KEY_ESCAPE:
+				if GlobalConstants.highscore < score:
+					GlobalConstants.highscore = score
+				get_tree().change_scene("res://Scenes/MainMenu.tscn")
+
+			#return # deactivates debug	
 			if event.scancode == KEY_T:
 				debug_spawn_player()
 			if event.scancode == KEY_E:
 				spawn_enemy()
-			if event.scancode == KEY_R:
-				if gameover:
-					reload_game()
 			if event.scancode == KEY_S:
-				$MainCamera.trigger_shake_cam(0.25)
+				$SoundEffects.play_sound("jump")
+				#$MainCamera.trigger_shake_cam(0.25)
 
 func reload_game():
 	get_tree().reload_current_scene()
@@ -67,6 +73,7 @@ func spawn_enemy():
 	newEnemy.connect("respawn", self, "respawn_enemy")	
 	newEnemy.connect("got_hit", self, "trigger_cam_shake")
 	add_child(newEnemy, true)
+	$SoundEffects.play_sound("enemySpawn")
 	if $EnemyTimer.wait_time > 2.5:
 		$EnemyTimer.wait_time -= 0.25
 
@@ -76,6 +83,7 @@ func trigger_cam_shake():
 func respawn_enemy(obj):
 	obj.position = $Spawner.position
 	obj.set_buff()
+	$SoundEffects.play_sound("enemyRespawn")
 	
 func spawn_letterBox():
 	var spawnIdx = 0
@@ -111,3 +119,13 @@ func spawn_cloud():
 func _on_PlayerCharacter_player_die():
 	gameover = true
 	$UI/Restart.visible = true
+	saveData()
+	
+func saveData():
+	if GlobalConstants.highscore < score:
+		var saveData = File.new()
+		saveData.open("user://data.save", File.WRITE)
+		var savedScore = { "highscore": score }
+		saveData.store_line(to_json(savedScore))
+		saveData.close()
+		

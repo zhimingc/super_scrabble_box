@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/MainGame.gd" type="Script" id=1]
 [ext_resource path="res://Objects/PlayerCharacter.tscn" type="PackedScene" id=2]
@@ -11,6 +11,13 @@
 [ext_resource path="res://Objects/BG_cloud.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Objects/PitParticles.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scripts/MainCamera.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/SoundEffects.gd" type="Script" id=12]
+[ext_resource path="res://Audio/jump_0.wav" type="AudioStream" id=13]
+[ext_resource path="res://Audio/pickup_1.wav" type="AudioStream" id=14]
+[ext_resource path="res://Audio/hurt_0.wav" type="AudioStream" id=15]
+[ext_resource path="res://Audio/respawn_0.wav" type="AudioStream" id=16]
+[ext_resource path="res://Audio/enemy_spawn_0.wav" type="AudioStream" id=17]
+[ext_resource path="res://Audio/pew_0.wav" type="AudioStream" id=18]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0899796, 0, 0, Vector2( 0.996269, 0.409091 ), -1.35354, 0.0, 0, 0 ]
@@ -40,14 +47,15 @@ margin_bottom = 540.0
 
 [node name="RestartText" type="Label" parent="UI/Restart"]
 margin_left = 348.0
-margin_top = 244.0
+margin_top = 217.0
 margin_right = 611.0
-margin_bottom = 295.0
+margin_bottom = 322.0
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
-text = "R to restart"
+text = "R to restart
+Esc to quit"
 align = 1
 valign = 1
 
@@ -112,5 +120,18 @@ emission_rect_extents = Vector2( 35, 1 )
 initial_velocity_random = 0.5
 scale_amount = 0.3
 scale_amount_curve = SubResource( 1 )
+
+[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+script = ExtResource( 12 )
+playerJump = ExtResource( 13 )
+sfxLib = {
+"enemyRespawn": ExtResource( 16 ),
+"enemySpawn": ExtResource( 17 ),
+"hit": ExtResource( 15 ),
+"jump": ExtResource( 13 ),
+"pew": ExtResource( 18 ),
+"pickup": ExtResource( 14 )
+}
 [connection signal="player_die" from="PlayerCharacter" to="." method="_on_PlayerCharacter_player_die"]
 [connection signal="word_attack" from="WordController" to="." method="_on_WordController_word_attack"]

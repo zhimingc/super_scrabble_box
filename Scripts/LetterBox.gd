@@ -30,6 +30,7 @@ func _on_LetterBox_body_entered(body):
 		body.add_letter(letter)
 		queue_free()
 		emit_signal("collected")
+		GlobalConstants.emit_signal("play_sfx", "pickup")
 		
 
 func get_letter_from_pool():

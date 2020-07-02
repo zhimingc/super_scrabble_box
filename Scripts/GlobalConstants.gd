@@ -1,5 +1,6 @@
 extends Node
 
+var highscore = 0
 var gravity = 9.8
 var isVowelWindow = [ false, true ]
 var letterPool = []
@@ -33,8 +34,9 @@ var letterCounts = [
 ]
 
 var vowels = [ "A", "E", "I", "O", "U" ]
-
 var dict : Dictionary
+
+signal play_sfx(sfx)
 
 func populate_letterPool():
 	for i in GlobalConstants.letterCounts.size():
