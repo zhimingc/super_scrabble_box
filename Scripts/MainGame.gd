@@ -50,13 +50,16 @@ func _unhandled_key_input(event):
 					GlobalConstants.highscore = score
 				get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
-			#return # deactivates debug	
+			return # deactivates debug	
 			if event.scancode == KEY_T:
 				debug_spawn_player()
 			if event.scancode == KEY_E:
 				spawn_enemy()
 			if event.scancode == KEY_S:
-				$SoundEffects.play_sound("jump")
+				for i in 6:
+					# layered sfx
+					yield(get_tree().create_timer(0.125), "timeout")
+					GlobalConstants.emit_signal("play_sfx", "pew")
 				#$MainCamera.trigger_shake_cam(0.25)
 
 func reload_game():
@@ -96,7 +99,7 @@ func spawn_letterBox():
 	newBox.position = letterSpawns[spawnIdx].position
 	newBox.connect("collected", self, "spawn_letterBox")
 	newBox.connect("collected", self, "add_score")
-	add_child(newBox)
+	call_deferred("add_child", newBox)
 
 func add_score():
 	score += 1

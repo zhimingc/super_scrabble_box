@@ -84,7 +84,7 @@ func check_word():
 
 func _unhandled_key_input(event):
 	# typing letters
-	if event.is_pressed() and !event.echo: 
+	if event.is_pressed() and !event.echo and isPaused: 
 		if event.scancode >= 65 and event.scancode <= 90:
 			var newLetter = false
 			var conv = PoolByteArray()
@@ -168,4 +168,7 @@ func word_attack(word):
 		newAttack.init(enemies[i], word[i])
 		add_child(newAttack)
 		enemies[i].isTargeted = true
+		
+		# layered sfx
+		yield(get_tree().create_timer(0.125), "timeout")
 		GlobalConstants.emit_signal("play_sfx", "pew")
