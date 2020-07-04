@@ -1,0 +1,29 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/SoundEffects.gd" type="Script" id=1]
+[ext_resource path="res://Audio/enemy_spawn_0.wav" type="AudioStream" id=2]
+[ext_resource path="res://Audio/pew_0.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/jump_0.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/respawn_0.wav" type="AudioStream" id=5]
+[ext_resource path="res://Audio/hurt_0.wav" type="AudioStream" id=6]
+[ext_resource path="res://Audio/pickup_1.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/appear_0.wav" type="AudioStream" id=8]
+[ext_resource path="res://Audio/disappear_0.wav" type="AudioStream" id=9]
+[ext_resource path="res://Audio/lose_0.wav" type="AudioStream" id=10]
+
+[node name="SoundEffects" type="AudioStreamPlayer"]
+pause_mode = 2
+stream = ExtResource( 4 )
+volume_db = -24.0
+script = ExtResource( 1 )
+sfxLib = {
+"enemyRespawn": ExtResource( 5 ),
+"enemySpawn": ExtResource( 2 ),
+"hit": ExtResource( 6 ),
+"jump": ExtResource( 4 ),
+"lose": ExtResource( 10 ),
+"pew": ExtResource( 3 ),
+"pickup": ExtResource( 7 ),
+"wm_appear": ExtResource( 8 ),
+"wm_disappear": ExtResource( 9 )
+}

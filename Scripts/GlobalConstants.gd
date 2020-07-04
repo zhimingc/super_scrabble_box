@@ -37,6 +37,7 @@ var vowels = [ "A", "E", "I", "O", "U" ]
 var dict : Dictionary
 
 signal play_sfx(sfx)
+signal play_sfx_pitch(sfx, pitch)
 
 func populate_letterPool():
 	for i in GlobalConstants.letterCounts.size():

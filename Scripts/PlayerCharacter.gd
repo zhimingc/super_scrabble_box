@@ -79,6 +79,7 @@ func jump():
 func die():
 	queue_free()
 	emit_signal("player_die")
+	GlobalConstants.emit_signal("play_sfx", "lose")	
 
 func can_take_letter():
 	#return get_valid_slot() != -1

@@ -122,15 +122,19 @@ func update_valid():
 	wordIsValid = check_word()
 	if wordIsValid:
 		validUI.visible = true
+		$Instruct_0.visible = true
 		for i in enemies.size():
 			if i < word.length():
 				enemies[i].set_targeted(true)
 			else:
 				enemies[i].set_targeted(false)
 	else:
+		$Instruct_0.visible = false		
 		validUI.visible = false
 		for i in enemies:
 			i.set_targeted(false)
+			
+	GlobalConstants.emit_signal("play_sfx_pitch", "type", 1 + word.length() * .1)
 
 func toggle_pause():
 	isPaused = !isPaused
@@ -138,6 +142,9 @@ func toggle_pause():
 	get_tree().paused = isPaused	
 	if isPaused:
 		enemies = player.get_closest_enemies()	
+		GlobalConstants.emit_signal("play_sfx", "wm_appear")
+	else:
+		GlobalConstants.emit_signal("play_sfx", "wm_disappear")		
 
 func init_wordMode():
 	for i in currentLettersIdx.size():
@@ -146,6 +153,8 @@ func init_wordMode():
 func hide_letters():
 	currentIdx = -1
 	validUI.visible = false
+	$Instruct_1.visible = false
+	$Instruct_0.visible = false	
 	for i in lettersHeldUI:
 		i.visible = false
 	for i in lettersUsedUI:
@@ -154,6 +163,8 @@ func hide_letters():
 func update_lettersHeld(letters):
 	hide_letters()
 	heldLetters = letters.duplicate()
+	$Instruct_1.visible = letters.size() == 0
+		
 	for i in letters.size():
 		heldLetters[i].inTyping = false
 		lettersHeldUI[i].visible = true

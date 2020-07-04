@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scripts/MainGame.gd" type="Script" id=1]
 [ext_resource path="res://Objects/PlayerCharacter.tscn" type="PackedScene" id=2]
@@ -11,15 +11,25 @@
 [ext_resource path="res://Objects/BG_cloud.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Objects/PitParticles.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scripts/MainCamera.gd" type="Script" id=11]
-[ext_resource path="res://Scripts/SoundEffects.gd" type="Script" id=12]
+[ext_resource path="res://Objects/SoundEffects.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Audio/jump_0.wav" type="AudioStream" id=13]
 [ext_resource path="res://Audio/pickup_1.wav" type="AudioStream" id=14]
 [ext_resource path="res://Audio/hurt_0.wav" type="AudioStream" id=15]
 [ext_resource path="res://Audio/respawn_0.wav" type="AudioStream" id=16]
 [ext_resource path="res://Audio/enemy_spawn_0.wav" type="AudioStream" id=17]
 [ext_resource path="res://Audio/pew_0.wav" type="AudioStream" id=18]
+[ext_resource path="res://Audio/appear_0.wav" type="AudioStream" id=19]
+[ext_resource path="res://Audio/disappear_0.wav" type="AudioStream" id=20]
+[ext_resource path="res://Audio/ambience_bgm_0.wav" type="AudioStream" id=21]
+[ext_resource path="res://Audio/lose_0.wav" type="AudioStream" id=22]
+[ext_resource path="res://Audio/type_0.wav" type="AudioStream" id=23]
+[ext_resource path="res://Fonts/Bungee-Regular.ttf" type="DynamicFontData" id=24]
 
-[sub_resource type="Curve" id=1]
+[sub_resource type="DynamicFont" id=1]
+size = 24
+font_data = ExtResource( 24 )
+
+[sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0899796, 0, 0, Vector2( 0.996269, 0.409091 ), -1.35354, 0.0, 0, 0 ]
 
 [node name="MainGame" type="Node2D"]
@@ -58,6 +68,22 @@ text = "R to restart
 Esc to quit"
 align = 1
 valign = 1
+
+[node name="Instruct_0" type="Label" parent="UI"]
+margin_left = 313.365
+margin_top = 370.308
+margin_right = 657.365
+margin_bottom = 399.308
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.223529, 0.215686, 0.254902, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/line_spacing = 4
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 0
+text = "spacebar to form words"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Level_0" parent="." instance=ExtResource( 6 )]
 
@@ -119,19 +145,25 @@ randomness = 0.5
 emission_rect_extents = Vector2( 35, 1 )
 initial_velocity_random = 0.5
 scale_amount = 0.3
-scale_amount_curve = SubResource( 1 )
+scale_amount_curve = SubResource( 2 )
 
-[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 13 )
-script = ExtResource( 12 )
-playerJump = ExtResource( 13 )
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+volume_db = -24.0
+autoplay = true
+
+[node name="SoundEffects" parent="." instance=ExtResource( 12 )]
 sfxLib = {
 "enemyRespawn": ExtResource( 16 ),
 "enemySpawn": ExtResource( 17 ),
 "hit": ExtResource( 15 ),
 "jump": ExtResource( 13 ),
+"lose": ExtResource( 22 ),
 "pew": ExtResource( 18 ),
-"pickup": ExtResource( 14 )
+"pickup": ExtResource( 14 ),
+"type": ExtResource( 23 ),
+"wm_appear": ExtResource( 19 ),
+"wm_disappear": ExtResource( 20 )
 }
 [connection signal="player_die" from="PlayerCharacter" to="." method="_on_PlayerCharacter_player_die"]
 [connection signal="word_attack" from="WordController" to="." method="_on_WordController_word_attack"]

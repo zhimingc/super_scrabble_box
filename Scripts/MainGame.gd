@@ -49,7 +49,9 @@ func _unhandled_key_input(event):
 				if GlobalConstants.highscore < score:
 					GlobalConstants.highscore = score
 				get_tree().change_scene("res://Scenes/MainMenu.tscn")
-
+			if event.scancode == KEY_SPACE:
+				$UI/Instruct_0.visible = false	
+			
 			return # deactivates debug	
 			if event.scancode == KEY_T:
 				debug_spawn_player()
